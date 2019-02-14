@@ -11,8 +11,7 @@ public class CustomerSpawner : MonoBehaviour {
     private SeatFinder seatMgr;
     private int customerAmount = 0;
     private const int MAX_CUSTOMER = 5;
-
-    // Use this for initialization
+    
     void Start () {
         seatMgr = UnityEngine.Object.FindObjectOfType<SeatFinder>();
     }
@@ -22,16 +21,11 @@ public class CustomerSpawner : MonoBehaviour {
         isWaitingForSpawn = true;
         customerAmount++;
         yield return new WaitForSeconds(Random.Range(minSecondsBetweenCustomer, maxSecondsBetweenCustomer));
-        Debug.Log("Instantiate in " + gameObject.transform.position);
         Instantiate(customerPrefab, gameObject.transform.position, Quaternion.identity);
         isWaitingForSpawn = false;
     }
 	
-	// Update is called once per frame
 	void Update () {
-		// spawn customers every <x> minute 
-        // or if <amount> < capacity
-        // depends on TOD, etc
         if (!isWaitingForSpawn && customerAmount < MAX_CUSTOMER)
         {
             StartCoroutine(SpawnCustomers());

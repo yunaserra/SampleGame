@@ -41,9 +41,7 @@ public class SeatFinder : MonoBehaviour {
 
     public int getUnoccupiedSeatIndex()
     {
-        // YUNA TODO: this feels dumb.
         List<int> indexes = new List<int>();
-        // TODO: randomize this later
         for (int i=0; i < seats.Length; ++i)
         {
             if (!seats[i].Occupied)

@@ -18,7 +18,7 @@ public class Customer : Interactables
 {
     public GameObject orderMarkerBG;
     public GameObject orderMarker;
-
+    public Sprite moneySprite;
     public FoodItem[] possibleItems;
 
     private SeatFinder seatMgr;
@@ -71,7 +71,9 @@ public class Customer : Interactables
             if (currentTime >= EATING_TIME)
             {
                 currentTime = 0.0f;
-                orderMarkerBG.GetComponent<SpriteRenderer>().enabled = false;
+                orderMarkerBG.SetActive(true);
+                orderMarker.SetActive(true);
+                orderMarker.GetComponent<SpriteRenderer>().sprite = moneySprite;
                 currentState = CustomerState.WAITING_TO_PAY;
             }
         }
@@ -90,15 +92,14 @@ public class Customer : Interactables
     {
         currentState = CustomerState.EATING;
         orderMarker.SetActive(false);
+        orderMarkerBG.SetActive(false);
     }
 
     private void GetFoodFromPlayer(GameObject player)
     {
-        Debug.Log("GETfoodFromPlayer");
         PlayerInventory inventory = player.GetComponent<PlayerInventory>();
         if (inventory.DoesPlayerHave(chosenOrder))
         {
-            Debug.Log("START EATING!");
             inventory.EmptyInventory();
             StartEating();
         }
@@ -108,13 +109,13 @@ public class Customer : Interactables
     {
         player.GetComponent<PlayerInventory>().AddMoney(chosenOrder.ItemPrice);
         currentState = CustomerState.LEAVING;
-        //set target to exit portal. destroy once it reaches it.
+        orderMarkerBG.SetActive(false);
+        orderMarker.SetActive(false);
         charaController.SetTarget(GameObject.FindWithTag("CustomerSpawn").transform);
     }
 
     public override void TriggeredByPlayer(GameObject player)
     {
-        Debug.Log("Trigger for " + currentState);
         if (customerFunctions.ContainsKey(currentState))
         {
             customerFunctions[currentState].Invoke(player);
