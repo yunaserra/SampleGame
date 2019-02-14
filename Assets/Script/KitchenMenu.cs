@@ -22,7 +22,6 @@ public class KitchenMenu : MonoBehaviour {
 
     public void ShowMenu()
     {
-        Debug.Log("Show menu!");
         contentPanel.gameObject.SetActive(true);
     }
 
@@ -38,7 +37,6 @@ public class KitchenMenu : MonoBehaviour {
             GameObject newBtn = Instantiate(kitchenButtonPrefab, contentPanel);
             // Yuna TODO: make these buttons flow in a "grid layout"
             newBtn.GetComponent<KitchenMenuButton>().SetupData(items[i]);
-            newBtn.GetComponentInChildren<Text>().text = items[i].ItemName;
             //newBtn.transform.SetParent(contentPanel);
         }
     }

@@ -112,7 +112,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			// this allows us to modify the positional speed before it's applied.
 			if (Time.deltaTime > 0 && m_Animator)
 			{
-                //            Debug.Log("What's misisng?", m_Animator);
                 Vector3 v = (m_Animator.deltaPosition * m_MoveSpeedMultiplier) / Time.deltaTime;
 
                 // we preserve the existing y part of the current velocity.

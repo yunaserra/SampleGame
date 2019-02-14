@@ -31,7 +31,6 @@ public class SeatFinder : MonoBehaviour {
     private void Awake()
     {
         GameObject[] seatObjects = GameObject.FindGameObjectsWithTag("Seat");
-        Debug.Log("ow many " + seatObjects.Length);
         seats = new Seat[seatObjects.Length];
         for (int i = 0; i < seats.Length; ++i)
         {
@@ -61,7 +60,6 @@ public class SeatFinder : MonoBehaviour {
 
    public GameObject occupySeat(int seatIndex)
     {
-        Debug.Log("Occupying seat of index " + seatIndex);
         seats[seatIndex].Occupied = true;
 
         return seats[seatIndex].SeatObject;

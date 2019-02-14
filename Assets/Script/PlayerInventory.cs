@@ -11,16 +11,6 @@ public class PlayerInventory : MonoBehaviour {
     public GameObject trayUI;
     public GameObject moneyUI;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     public FoodItem TakeCurrentInventory()
     {
         FoodItem temp = inventoryContent;
@@ -46,7 +36,6 @@ public class PlayerInventory : MonoBehaviour {
         Assert.IsFalse(inventoryContent, "Inventory content is set");
         if (!inventoryContent)
         {
-            Debug.Log("Set inventory content: " + newItem.ItemName);
             inventoryContent = newItem;
             // Update image
             UpdateTrayUI();

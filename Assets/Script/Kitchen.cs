@@ -41,6 +41,8 @@ public class Kitchen : Interactables {
 
     private void FulfillOrder()
     {
+        AudioSource audioSrc = GetComponent<AudioSource>();
+        audioSrc.PlayOneShot(audioSrc.clip);
         currentStatus = KitchenStatus.FINISHED;
         kitchenModel.GetComponent<Renderer>().material.color = Color.green;
     }
@@ -49,6 +51,7 @@ public class Kitchen : Interactables {
     {
         player.GetComponent<PlayerInventory>().SetInventory(currentOrder);
         currentOrder = null;
+        kitchenModel.GetComponent<Renderer>().material.color = Color.white;
         currentStatus = KitchenStatus.READY;
     }
 
