@@ -3,3 +3,7 @@ Unityを使って、レストランマネジメントのゲームを開発して
 
 A restaurant management game developed using Unity.
 Currently in development.
+
+Assets from:
+https://opengameart.org/content/bell-sounds
+https://opengameart.org/content/pixel-art-food-pack-by-inkmammoth
