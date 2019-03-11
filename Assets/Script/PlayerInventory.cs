@@ -1,15 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour {
+    public GameObject TrayUI;
+    public GameObject MoneyUI;
+
     private FoodItem inventoryContent;
     private float currentMoney;
-
-    public GameObject trayUI;
-    public GameObject moneyUI;
 
     public FoodItem TakeCurrentInventory()
     {
@@ -27,8 +25,8 @@ public class PlayerInventory : MonoBehaviour {
     public void EmptyInventory()
     {
         inventoryContent = null;
-        trayUI.GetComponent<Image>().sprite = null;
-        trayUI.GetComponent<Image>().color = Color.clear;
+        TrayUI.GetComponent<Image>().sprite = null;
+        TrayUI.GetComponent<Image>().color = Color.clear;
     }
 
     public void SetInventory(FoodItem newItem)
@@ -44,13 +42,13 @@ public class PlayerInventory : MonoBehaviour {
 
     private void UpdateTrayUI()
     {
-        trayUI.GetComponent<Image>().sprite = inventoryContent.Icon;
-        trayUI.GetComponent<Image>().color = Color.white;
+        TrayUI.GetComponent<Image>().sprite = inventoryContent.Icon;
+        TrayUI.GetComponent<Image>().color = Color.white;
     }
 
     public void AddMoney(float amount)
     {
         currentMoney += amount;
-        moneyUI.GetComponent<Text>().text = currentMoney.ToString();
+        MoneyUI.GetComponent<Text>().text = currentMoney.ToString();
     }
 }

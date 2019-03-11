@@ -1,16 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DDOL : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
         DontDestroyOnLoad(gameObject);
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		
 	}
 }

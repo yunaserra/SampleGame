@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +11,7 @@ public enum KitchenStatus
 
 public class Kitchen : Interactables {
 
-    public GameObject kitchenModel;
+    public GameObject KitchenModel;
 
     private KitchenStatus currentStatus = KitchenStatus.READY;
     private FoodItem currentOrder = null;
@@ -20,14 +19,16 @@ public class Kitchen : Interactables {
     private Dictionary<KitchenStatus, Action<GameObject>> kitchenFunctions;
 
     // Use this for initialization
-    void Start() {
+    void Start()
+    {
         kitchenFunctions = new Dictionary<KitchenStatus, Action<GameObject>>();
         kitchenFunctions.Add(KitchenStatus.READY, ShowKitchenMenu);
         kitchenFunctions.Add(KitchenStatus.FINISHED, SurrenderOrder);
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         if (currentStatus == KitchenStatus.IN_PROGRESS)
         {
             currentTimer += Time.deltaTime;
@@ -44,14 +45,14 @@ public class Kitchen : Interactables {
         AudioSource audioSrc = GetComponent<AudioSource>();
         audioSrc.PlayOneShot(audioSrc.clip);
         currentStatus = KitchenStatus.FINISHED;
-        kitchenModel.GetComponent<Renderer>().material.color = Color.green;
+        KitchenModel.GetComponent<Renderer>().material.color = Color.green;
     }
 
     public void SurrenderOrder(GameObject player)
     {
         player.GetComponent<PlayerInventory>().SetInventory(currentOrder);
         currentOrder = null;
-        kitchenModel.GetComponent<Renderer>().material.color = Color.white;
+        KitchenModel.GetComponent<Renderer>().material.color = Color.white;
         currentStatus = KitchenStatus.READY;
     }
 
@@ -59,12 +60,11 @@ public class Kitchen : Interactables {
     {
         GetComponent<KitchenMenu>().ShowMenu();
     }
-
-    //OrderType?
+    
     public void ReceiveOrder(FoodItem orderName)
     {
         currentOrder = orderName;
-        kitchenModel.GetComponent<Renderer>().material.color = Color.red;
+        KitchenModel.GetComponent<Renderer>().material.color = Color.red;
         currentStatus = KitchenStatus.IN_PROGRESS;
 
         GetComponent<KitchenMenu>().CloseMenu();
@@ -77,6 +77,4 @@ public class Kitchen : Interactables {
             kitchenFunctions[currentStatus].Invoke(player);
         }
     }
-
-
 }

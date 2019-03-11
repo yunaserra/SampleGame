@@ -1,43 +1,33 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class KitchenMenu : MonoBehaviour {
-    public Transform contentPanel;
-    public FoodItem[] items;
+    public Transform ContentPanel;
+    public FoodItem[] Items;
 
-    public GameObject kitchenButtonPrefab;
-
-    // Use this for initialization
-    void Start() {
+    public GameObject KitchenButtonPrefab;
+    
+    void Start()
+    {
         AddButtons();
-        contentPanel.gameObject.SetActive(false);
-    }
-
-    // Update is called once per frame
-    void Update() {
-
+        ContentPanel.gameObject.SetActive(false);
     }
 
     public void ShowMenu()
     {
-        contentPanel.gameObject.SetActive(true);
+        ContentPanel.gameObject.SetActive(true);
     }
 
     public void CloseMenu()
     {
-        contentPanel.gameObject.SetActive(false);
+        ContentPanel.gameObject.SetActive(false);
     }
 
     private void AddButtons()
     {
-        for (int i = 0; i < items.Length; ++i)
+        for (int i = 0; i < Items.Length; ++i)
         {
-            GameObject newBtn = Instantiate(kitchenButtonPrefab, contentPanel);
-            // Yuna TODO: make these buttons flow in a "grid layout"
-            newBtn.GetComponent<KitchenMenuButton>().SetupData(items[i]);
-            //newBtn.transform.SetParent(contentPanel);
+            GameObject newBtn = Instantiate(KitchenButtonPrefab, ContentPanel);
+            newBtn.GetComponent<KitchenMenuButton>().SetupData(Items[i]);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public struct Seat
@@ -78,7 +77,7 @@ public class SeatFinder : MonoBehaviour {
         return false;
     }
 
-    void unoccupySeat(int seatIndex)
+    void UnoccupySeat(int seatIndex)
     {
         seats[seatIndex].Occupied = false;
     }

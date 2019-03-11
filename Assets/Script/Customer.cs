@@ -16,10 +16,10 @@ public enum CustomerState
 
 public class Customer : Interactables
 {
-    public GameObject orderMarkerBG;
-    public GameObject orderMarker;
-    public Sprite moneySprite;
-    public FoodItem[] possibleItems;
+    public GameObject OrderMarkerBG;
+    public GameObject OrderMarker;
+    public Sprite MoneySprite;
+    public FoodItem[] PossibleItems;
 
     private SeatFinder seatMgr;
     private AICharacterControl charaController;
@@ -27,16 +27,17 @@ public class Customer : Interactables
     private const float EATING_TIME = 2.0f;
     private float currentTime = 0.0f;
     private CustomerState currentState;
-
     private Dictionary<CustomerState, Action<GameObject>> customerFunctions;
+    private Transform exitLocation;
 
     void Start()
     {
         currentState = CustomerState.WALKING;
+        exitLocation = GameObject.FindWithTag("CustomerSpawn").transform;
 
         customerFunctions = new Dictionary<CustomerState, Action<GameObject>>();
-        customerFunctions.Add(CustomerState.WAITING_FOR_ORDER, GetFoodFromPlayer);
-        customerFunctions.Add(CustomerState.WAITING_TO_ORDER, ShowOrder);
+        customerFunctions.Add(CustomerState.WAITING_FOR_ORDER, getFoodFromPlayer);
+        customerFunctions.Add(CustomerState.WAITING_TO_ORDER, showOrder);
         customerFunctions.Add(CustomerState.WAITING_TO_PAY, PayForFood);
 
         seatMgr = UnityEngine.Object.FindObjectOfType<SeatFinder>();
@@ -54,15 +55,14 @@ public class Customer : Interactables
         yield return new WaitForSeconds(5);
 
         currentState = CustomerState.WAITING_TO_ORDER;
-        orderMarkerBG.GetComponent<SpriteRenderer>().enabled = true;
+        OrderMarkerBG.GetComponent<SpriteRenderer>().enabled = true;
     }
 
     void MoveToSeat(GameObject seat)
     {
         charaController.SetTarget(seat.transform);
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         if (currentState == CustomerState.EATING)
@@ -71,37 +71,37 @@ public class Customer : Interactables
             if (currentTime >= EATING_TIME)
             {
                 currentTime = 0.0f;
-                orderMarkerBG.SetActive(true);
-                orderMarker.SetActive(true);
-                orderMarker.GetComponent<SpriteRenderer>().sprite = moneySprite;
+                OrderMarkerBG.SetActive(true);
+                OrderMarker.SetActive(true);
+                OrderMarker.GetComponent<SpriteRenderer>().sprite = MoneySprite;
                 currentState = CustomerState.WAITING_TO_PAY;
             }
         }
     }
 
-    private void ShowOrder(GameObject player)
+    private void showOrder(GameObject player)
     {
-        int chosenIndex = Mathf.CeilToInt(UnityEngine.Random.value * possibleItems.Length) - 1;
-        chosenOrder = possibleItems[chosenIndex];
-        orderMarker.GetComponent<SpriteRenderer>().sprite = chosenOrder.Icon;
-        orderMarker.SetActive(true);
+        int chosenIndex = Mathf.CeilToInt(UnityEngine.Random.value * PossibleItems.Length) - 1;
+        chosenOrder = PossibleItems[chosenIndex];
+        OrderMarker.GetComponent<SpriteRenderer>().sprite = chosenOrder.Icon;
+        OrderMarker.SetActive(true);
         currentState = CustomerState.WAITING_FOR_ORDER;
     }
 
-    private void StartEating()
+    private void startEating()
     {
         currentState = CustomerState.EATING;
-        orderMarker.SetActive(false);
-        orderMarkerBG.SetActive(false);
+        OrderMarker.SetActive(false);
+        OrderMarkerBG.SetActive(false);
     }
 
-    private void GetFoodFromPlayer(GameObject player)
+    private void getFoodFromPlayer(GameObject player)
     {
         PlayerInventory inventory = player.GetComponent<PlayerInventory>();
         if (inventory.DoesPlayerHave(chosenOrder))
         {
             inventory.EmptyInventory();
-            StartEating();
+            startEating();
         }
     }
 
@@ -109,9 +109,9 @@ public class Customer : Interactables
     {
         player.GetComponent<PlayerInventory>().AddMoney(chosenOrder.ItemPrice);
         currentState = CustomerState.LEAVING;
-        orderMarkerBG.SetActive(false);
-        orderMarker.SetActive(false);
-        charaController.SetTarget(GameObject.FindWithTag("CustomerSpawn").transform);
+        OrderMarkerBG.SetActive(false);
+        OrderMarker.SetActive(false);
+        charaController.SetTarget(exitLocation);
     }
 
     public override void TriggeredByPlayer(GameObject player)

@@ -1,24 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class InstructionButton : MonoBehaviour {
-    public GameObject instructionPanel;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
+    public GameObject InstructionPanel;
 	
 	public void DisplayInstructionAndPauseGame()
     {
         Time.timeScale = 0;
-        instructionPanel.SetActive(true);
+        InstructionPanel.SetActive(true);
     }
 
     public void UnpauseGame()
     {
         Time.timeScale = 1;
-        instructionPanel.SetActive(false);
+        InstructionPanel.SetActive(false);
     }
 }
